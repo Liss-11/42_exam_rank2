@@ -12,56 +12,50 @@ int	main(int ac, char **av)
 	return (0);
 }
 
-int	compare(char a, char *s1)
+int	char_appeared_in_str(char a, char *s1)
 {
-	while(s1)
+	while(*s1 != '\0')
 	{
 		if(a == *s1)
-			return (0);
+			return (1);
 		s1++;
 	}
-	return (1);
+	return (0);
+}
+
+int	char_appeared_before(int index, char *str)
+{
+	int	i;
+
+	i = 0;
+	while(i < index)
+	{
+		if(str[i] == str[index])
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 void	ft_union(char *s1, char *s2)
 {
 	int	i;
-	int	j;
 
 	i = 1;
 	if(s1[0] != '\0')
 	{
 		write(1, &s1[0], 1);
-		j = 0;
-		while(s1[i] != '\0' && j < i)
+		while(s1[i] != '\0')
 		{
-			if(s1[i] != s1[j])
-					j++;
-			if(j == i)
+			if(!char_appeared_before(i, s1))
 				write(1, &s1[i], 1);
-			else
-			{
-				j = 0;
-				i++;
-			}
+			i++;
 		}
-		if(!compare(s2[0], s1))
-			write(1, &s2[0], 1);
-		i = 1;
-		j = 0;
-		while(s2[i] != '\0' && j < i)
+		i = 0;
+		while(s2[i] != '\0')
 		{	
-			j = 0;
-			if(!compare(s2[i], s1))
-			{
-				while(j < i)
-				{
-					if(s2[i] != s2[j])
-						j++;
-				}
-				if(j == i)
-					write(1, &s2[i], 1);
-			}
+			if((!char_appeared_in_str(s2[i], s1)) && (!char_appeared_before(i, s2)))
+				write(1, &s2[i], 1);
 			i++;
 		}
 	}
