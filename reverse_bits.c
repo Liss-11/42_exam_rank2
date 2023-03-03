@@ -6,6 +6,22 @@ void	print_bits(char c);
 void	compose_char(int bit);
 void print_negate_char(char c);
 
+unsigned char	reverse_all_bits(unsigned char octet)
+{
+	char c = '\0';
+	int	num_bit;
+
+	num_bit = 0;
+	while(num_bit < 8)
+	{
+		if((octet & (1 << num_bit)) != 0)
+			c = c | (128 >> num_bit);
+		num_bit++;
+	}
+	print_bits(c);
+	return c;
+}
+
 
 unsigned char	reverse_bits(unsigned char octet)
 {
@@ -20,6 +36,7 @@ int	main(void)
 	reverse_bits('c');
 	print_bits('c');
 	print_negate_char('c');
+	reverse_all_bits('c');
 	compose_char(0);
 	compose_char(1);
 	compose_char(1);
@@ -31,17 +48,6 @@ int	main(void)
 	return(0);
 }
 
-/*
-octet = (octet << 4) | (octet >> 4)
-
-
-
-10001010
-00000010
-_________ hago un &
-00000010*/
-
-//10000000 -> 128
 void print_negate_char(char c)
 {
 	c = ~c;
